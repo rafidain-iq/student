@@ -1,28 +1,53 @@
-/* 🌐 ملف: base.css */
-/* تنسيقات عامة موحدة لكل الصفحات */
+/* 🌐 ملف: base.css (مطوَّر) */
 
+/* ==== المتغيرات والقيم الافتراضية (Light Mode) ==== */
 :root {
-  --main-color: #38b6b2;
-  --accent-color: #f4b400;
-  --text-color: #222;
-  --bg-color: #f9f9f9;
+  --main-color: #1976d2; /* أزرق أساسي قوي */
+  --accent-color: #ff9800; /* برتقالي للتنبيه */
+  --text-color: #333;
+  --light-text-color: #f5f5f5;
+  --bg-color: #f4f7f6; /* خلفية خفيفة جداً */
   --card-bg: #ffffff;
-  --border-radius: 10px;
+  --border-radius-lg: 12px; /* حواف دائرية أكبر */
+  --border-radius-sm: 8px;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 8px 16px rgba(0, 0, 0, 0.15);
   --transition-speed: 0.3s;
+  
+  /* ألوان رسائل النظام */
+  --info-bg: #e3f2fd;
+  --info-text: #0d47a1;
+  --success-bg: #e8f5e9;
+  --success-text: #2e7d32;
+  --error-bg: #ffebee;
+  --error-text: #c62828;
 }
 
-/* القاعدة الأساسية */
+/* ==== الإعدادات الأساسية والخطوط (Typography) ==== */
 body {
   margin: 0;
   padding: 0;
-  font-family: "Cairo", Arial, sans-serif;
+  font-family: 'Cairo', 'Noto Sans Arabic', sans-serif; /* خط احتياطي أفضل */
+  font-size: 16px;
+  line-height: 1.6;
   background-color: var(--bg-color);
   color: var(--text-color);
   direction: rtl;
   scroll-behavior: smooth;
+  /* الانتقال السلس للوضع المظلم */
+  transition: background-color var(--transition-speed), color var(--transition-speed);
 }
 
-/* الروابط والأزرار */
+/* الترويسات (Headers) */
+h1, h2, h3 {
+  margin: 0 0 15px 0;
+  color: var(--main-color);
+}
+h2 { font-size: 1.8rem; font-weight: 700; }
+h3 { font-size: 1.3rem; font-weight: 600; }
+
+
+/* ==== الروابط والأزرار (Buttons) ==== */
 a {
   text-decoration: none;
   color: var(--main-color);
@@ -34,58 +59,188 @@ a:hover {
 
 button {
   background: var(--main-color);
-  color: #fff;
+  color: var(--light-text-color);
   border: none;
-  padding: 10px 18px;
-  border-radius: 6px;
-  font-size: 16px;
+  padding: 12px 20px;
+  border-radius: var(--border-radius-sm); /* حواف موحدة */
+  font-size: 15px;
+  font-weight: 600;
   cursor: pointer;
-  transition: background var(--transition-speed);
+  box-shadow: 0 4px 10px rgba(25, 118, 210, 0.3);
+  transition: background var(--transition-speed), transform 0.3s, box-shadow 0.3s;
 }
 button:hover {
-  background: #2a918e;
+  background: #1565c0; /* لون أغمق عند المرور */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(25, 118, 210, 0.4);
+}
+button:active {
+  transform: translateY(0); /* أنيميشن الضغط */
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.2);
 }
 
-/* البطاقات العامة */
+
+/* ==== البطاقات العامة (Cards) ==== */
 .card {
   background: var(--card-bg);
-  border-radius: var(--border-radius);
-  box-shadow: 0 1px 6px rgba(0,0,0,0.1);
-  padding: 15px;
-  margin-bottom: 20px;
+  border-radius: var(--border-radius-lg); /* حواف أكثر دائرية */
+  box-shadow: var(--shadow-sm);
+  padding: 20px; /* زيادة التباعد الداخلي */
+  margin-bottom: 25px;
+  /* سنعتمد على أنيميشن CSS منفصل لـ animate-card */
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.card:hover {
+    box-shadow: var(--shadow-md);
+    /* transform: translateY(-3px); */ /* نوقفها هنا ونستخدمها فقط في عناصر القوائم */
 }
 
-/* الوضع المظلم */
+/* أنيميشن دخول البطاقات (للتنسيق مع JS) */
+.animate-card {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: card-slide-in 0.5s forwards ease-out;
+}
+@keyframes card-slide-in {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* ==== الجداول (Tables) ==== */
+.table-responsive {
+    overflow-x: auto; /* يجعل الجدول قابلاً للتمرير أفقياً على الشاشات الصغيرة */
+    margin-bottom: 20px;
+    border-radius: var(--border-radius-sm);
+    box-shadow: var(--shadow-sm);
+    background: var(--card-bg); /* لون البطاقة */
+}
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+}
+.data-table th, .data-table td {
+  border: 1px solid #eee;
+  padding: 12px 15px;
+  text-align: right;
+}
+.data-table th {
+  background-color: #f0f0f0;
+  color: var(--main-color);
+  font-weight: 600;
+  border-bottom: 2px solid var(--main-color);
+  position: sticky; /* تثبيت الرأس على الجوال */
+  top: 0;
+}
+.data-table tr:nth-child(even) {
+  background-color: #fafafa;
+}
+.data-table tr:hover {
+  background-color: #e0f7fa; /* لون خفيف عند المرور */
+  box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+  transform: none; /* إزالة الـ transform من الصفوف */
+}
+
+
+/* ==== رسائل النظام (Toast/Message Boxes) - التطوير الأهم ==== */
+#message-container {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    /* لإظهار الرسائل فوق بعضها عند ظهور أكثر من رسالة */
+}
+
+.message-box {
+  padding: 14px 25px;
+  border-radius: var(--border-radius-lg);
+  min-width: 250px;
+  text-align: center;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  opacity: 0;
+  transform: translateY(-20px);
+  /* أنيميشن الدخول والخروج */
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
+}
+
+/* حالة الظهور (تُضاف بواسطة JS) */
+.message-box.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ألوان وأنماط الرسائل */
+.message-box-info {
+  background: var(--info-bg);
+  color: var(--info-text);
+}
+.message-box-success {
+  background: var(--success-bg);
+  color: var(--success-text);
+  border: 1px solid #a5d6a7;
+}
+.message-box-error {
+  background: var(--error-bg);
+  color: var(--error-text);
+  border: 1px solid #ef9a9a;
+}
+
+
+/* ==== الوضع المظلم (Dark Mode) ==== */
 body.dark-mode {
-  background-color: #1e1e1e;
-  color: #f5f5f5;
+  background-color: #121212;
+  color: #e0e0e0;
 }
 body.dark-mode .card {
-  background-color: #2b2b2b;
+  background-color: #1e1e1e;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+body.dark-mode h1, body.dark-mode h2, body.dark-mode h3 {
+    color: #81d4fa;
 }
 body.dark-mode a {
-  color: #80cbc4;
+  color: #81d4fa;
+}
+body.dark-mode .data-table tr:hover {
+  background-color: #2a2a2a;
+}
+body.dark-mode .data-table th {
+    background-color: #222;
+    color: #bdbdbd;
+    border-bottom-color: #444;
+}
+body.dark-mode .data-table tr:nth-child(even) {
+  background-color: #1a1a1a;
+}
+body.dark-mode .table-responsive {
+    box-shadow: none;
+    background: #1e1e1e;
 }
 
-/* الترويسات */
-h1, h2, h3 {
-  margin: 0 0 10px 0;
-}
 
-/* الرسائل العامة */
-.message-box {
-  background: #e3f2fd;
-  border: 1px solid #90caf9;
-  padding: 15px;
-  border-radius: 8px;
-  margin: 10px 0;
-  text-align: center;
-  color: #0d47a1;
-}
-
-/* هوامش عامة */
-.container {
-  max-width: 1200px;
-  margin: auto;
-  padding: 15px;
+/* ==== Responsive ==== */
+@media (max-width: 600px) {
+  .container {
+    padding: 10px;
+  }
+  .data-table th, .data-table td {
+    padding: 10px;
+    font-size: 13px;
+  }
+  button {
+    font-size: 14px;
+    padding: 10px 16px;
+  }
+  .message-box {
+      min-width: unset;
+      width: 80%;
+  }
 }
