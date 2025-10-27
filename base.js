@@ -1,82 +1,74 @@
-// ⚙️ ملف: base.js (محسن)
+// ⚙️ ملف: base.js (مطوَّر ليعتمد على CSS)
 
-// ====== تبديل الوضع المظلم مع Transition سلس ======
+// ====== تبديل الوضع المظلم (اعتماد كامل على CSS) ======
 function toggleDarkMode() {
-  document.body.classList.toggle("dark-mode");
-  // Transition سلس لكل العناصر
-  document.body.style.transition = "background 0.4s, color 0.4s";
-  localStorage.setItem("darkMode", document.body.classList.contains("dark-mode"));
+  const isDark = document.body.classList.toggle("dark-mode");
+  // لا نحتاج لتعيين transition هنا، بل نضعها في CSS على body
+  localStorage.setItem("darkMode", isDark);
+
+  // تحديث نص زر التبديل إذا كان موجودًا
+  const toggleBtn = document.getElementById("darkToggle");
+  if(toggleBtn) {
+    toggleBtn.innerHTML = isDark ? 
+      '<span class="icon">☀️</span> تفعيل الوضع الفاتح' : 
+      '<span class="icon">🌙</span> تفعيل الوضع المظلم';
+  }
 }
 
 // تطبيق الوضع المظلم المحفوظ عند التحميل
 window.addEventListener("DOMContentLoaded", () => {
   const savedMode = localStorage.getItem("darkMode") === "true";
   if (savedMode) {
+    // نطبق الفئة مباشرة
     document.body.classList.add("dark-mode");
-    document.body.style.transition = "background 0.4s, color 0.4s";
+  }
+  
+  // تحديث حالة زر التبديل عند بدء التشغيل
+  const toggleBtn = document.getElementById("darkToggle");
+  if(toggleBtn) {
+    const isDark = document.body.classList.contains("dark-mode");
+    toggleBtn.innerHTML = isDark ? 
+      '<span class="icon">☀️</span> تفعيل الوضع الفاتح' : 
+      '<span class="icon">🌙</span> تفعيل الوضع المظلم';
+      
+    // إضافة مستمع الحدث للزر
+    toggleBtn.addEventListener("click", toggleDarkMode);
   }
 });
 
-// ====== عرض رسالة مؤقتة بأسلوب احترافي ======
+
+// ====== عرض رسالة مؤقتة بأسلوب احترافي (يعتمد على فئات CSS) ======
 function showMessage(text, type = "info") {
-  // حاوية الرسائل (تُنشأ مرة واحدة)
+  // 1. حاوية الرسائل (تُنشأ مرة واحدة مع فئة CSS)
   let container = document.getElementById("message-container");
   if(!container){
     container = document.createElement("div");
     container.id = "message-container";
-    container.style.position = "fixed";
-    container.style.top = "20px";
-    container.style.left = "50%";
-    container.style.transform = "translateX(-50%)";
-    container.style.zIndex = "9999";
-    container.style.display = "flex";
-    container.style.flexDirection = "column";
-    container.style.gap = "10px";
+    // سنعتمد على CSS لجميع تنسيقات الموقع والثبات (position, zIndex, flex)
     document.body.appendChild(container);
   }
 
+  // 2. إنشاء صندوق الرسالة
   const box = document.createElement("div");
-  box.className = "message-box";
-  box.style.padding = "12px 20px";
-  box.style.borderRadius = "8px";
-  box.style.minWidth = "200px";
-  box.style.textAlign = "center";
-  box.style.fontWeight = "500";
-  box.style.boxShadow = "0 2px 10px rgba(0,0,0,0.15)";
-  box.style.opacity = 0;
-  box.style.transform = "translateY(-20px)";
-  box.style.transition = "all 0.4s ease";
-
-  // تحديد اللون حسب النوع
-  if(type === "error"){
-    box.style.background = "#ffcdd2";
-    box.style.color = "#b71c1c";
-  } else if(type === "success"){
-    box.style.background = "#c8e6c9";
-    box.style.color = "#1b5e20";
-  } else {
-    box.style.background = "#e3f2fd";
-    box.style.color = "#0d47a1";
-  }
-
+  // إضافة فئات CSS لتنسيق الصندوق والنوع
+  box.className = `message-box message-box-${type}`;
   box.textContent = text;
   container.appendChild(box);
 
-  // أنميشن الدخول
+  // 3. أنميشن الدخول (باستخدام فئة CSS)
+  // ننتظر 50ms للتأكد من أن المتصفح طبق الأبعاد الابتدائية قبل إضافة فئة الدخول
   setTimeout(() => {
-    box.style.opacity = 1;
-    box.style.transform = "translateY(0)";
+    box.classList.add("show");
   }, 50);
 
-  // إزالة الرسالة بعد 4 ثواني مع أنميشن خروج
+  // 4. إزالة الرسالة بعد 4 ثواني مع أنميشن خروج
   setTimeout(() => {
-    box.style.opacity = 0;
-    box.style.transform = "translateY(-20px)";
-    setTimeout(() => box.remove(), 400);
+    box.classList.remove("show"); // إزالة فئة الدخول لبدء أنيميشن الخروج في CSS
+    // الانتظار حتى اكتمال أنيميشن الخروج (يجب أن يكون 400ms أو أكثر في CSS)
+    setTimeout(() => box.remove(), 500);
   }, 4000);
 }
 
-// ====== أمثلة استخدام ======
-// showMessage("تم الحفظ بنجاح!", "success");
-// showMessage("حدث خطأ أثناء الحفظ!", "error");
-// toggleDarkMode();
+
+// ====== تصدير الدوال (إذا كنت تستخدم Modules) ======
+// export { toggleDarkMode, showMessage };
