@@ -1,6 +1,11 @@
+/* ==== إعداد الخطوط والخلفية ==== */
 body {
-  font-family: 'Tahoma', sans-serif;
-  background: #f5f7fa url('https://k.top4top.io/p_3498f7ivx1.png') no-repeat center center fixed;
+  font-family: 'Cairo', 'Tahoma', sans-serif;
+  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+  background-image: url('https://k.top4top.io/p_3498f7ivx1.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
   background-size: cover;
   margin: 0;
   padding: 0;
@@ -8,45 +13,91 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  animation: fadeIn 1.2s ease-in-out;
 }
 
+/* ==== صندوق تسجيل الدخول ==== */
 .login-container {
-  background: rgba(255, 255, 255, 0.95);
-  padding: 30px;
-  border-radius: 10px;
-  text-align: center;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(12px);
+  padding: 40px 35px;
+  border-radius: 18px;
   width: 90%;
   max-width: 380px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: center;
+  box-shadow:
+    8px 8px 20px rgba(0,0,0,0.2),
+    -5px -5px 15px rgba(255,255,255,0.3);
+  transition: all 0.3s ease;
 }
 
+.login-container:hover {
+  transform: translateY(-5px);
+  box-shadow:
+    12px 12px 25px rgba(0,0,0,0.25),
+    -8px -8px 20px rgba(255,255,255,0.35);
+}
+
+/* ==== الشعار ==== */
 .logo {
-  width: 110px;
-  margin-bottom: 20px;
+  width: 120px;
+  margin-bottom: 25px;
+  animation: pulse 2s infinite ease-in-out;
 }
 
+/* ==== العنوان ==== */
 h2 {
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   color: #0d47a1;
+  font-size: 1.6rem;
+  letter-spacing: 0.5px;
 }
 
+/* ==== الحقول والأزرار ==== */
 input, select, button {
   width: 100%;
-  padding: 12px;
-  margin: 8px 0;
-  font-size: 16px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+  padding: 13px;
+  margin: 10px 0;
+  font-size: 15px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  transition: all 0.2s ease;
+  box-shadow:
+    inset 2px 2px 4px rgba(0,0,0,0.1),
+    inset -2px -2px 4px rgba(255,255,255,0.6);
 }
 
+input:focus, select:focus {
+  box-shadow:
+    inset 3px 3px 6px rgba(0,0,0,0.2),
+    inset -3px -3px 6px rgba(255,255,255,0.8);
+}
+
+/* ==== زر الدخول ==== */
 button {
-  background: #1976d2;
-  color: white;
-  border: none;
-  cursor: pointer;
+  background: linear-gradient(135deg, #1976d2, #0d47a1);
+  color: #fff;
   font-weight: bold;
+  cursor: pointer;
+  box-shadow:
+    0 4px 8px rgba(13,71,161,0.3);
 }
 
 button:hover {
-  background: #125ca1;
+  background: linear-gradient(135deg, #0d47a1, #1565c0);
+  box-shadow:
+    0 6px 12px rgba(13,71,161,0.4);
+  transform: translateY(-2px);
+}
+
+/* ==== الحركات ==== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.85; }
 }
