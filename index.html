@@ -5,19 +5,51 @@
   <title>تسجيل الدخول – إعدادية رافدين</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="login-style.css" rel="stylesheet">
-</head>
+  </head>
 <body>
-  <div class="login-container">
-    <img src="https://e.top4top.io/p_34909jjnx0.png" alt="شعار المدرسة" class="logo">
-    <h2>تسجيل دخول الطالب</h2>
-    <input type="text" id="code" placeholder="أدخل الكود">
-    <select id="class">
-      <option value="">اختر الصف</option>
-      <option>رابع أ</option><option>رابع ب</option><option>رابع ج</option><option>رابع د</option><option>رابع هـ</option><option>رابع و</option>
-      <option>خامس أ</option><option>خامس ب</option><option>خامس ج</option><option>خامس د</option><option>خامس هـ</option><option>خامس و</option>
-      <option>سادس أ</option><option>سادس ب</option><option>سادس ج</option><option>سادس د</option><option>سادس هـ</option><option>سادس و</option>
-    </select>
-    <button id="login-btn">دخول</button>
+  <div class="login-page">
+    <div class="login-container">
+      <img src="https://e.top4top.io/p_34909jjnx0.png" alt="شعار المدرسة" class="logo">
+      
+      <h2 class="title">تسجيل دخول الطالب</h2>
+      
+      <input type="text" id="code" class="input-field" placeholder="أدخل الكود">
+      
+      <select id="class" class="input-field select-field">
+        <option value="" disabled selected>اختر الصف</option>
+        
+        <optgroup label="الصف الرابع">
+          <option value="رابع أ">رابع أ</option>
+          <option value="رابع ب">رابع ب</option>
+          <option value="رابع ج">رابع ج</option>
+          <option value="رابع د">رابع د</option>
+          <option value="رابع هـ">رابع هـ</option>
+          <option value="رابع و">رابع و</option>
+        </optgroup>
+        
+        <optgroup label="الصف الخامس">
+          <option value="خامس أ">خامس أ</option>
+          <option value="خامس ب">خامس ب</option>
+          <option value="خامس ج">خامس ج</option>
+          <option value="خامس د">خامس د</option>
+          <option value="خامس هـ">خامس هـ</option>
+          <option value="خامس و">خامس و</option>
+        </optgroup>
+        
+        <optgroup label="الصف السادس">
+          <option value="سادس أ">سادس أ</option>
+          <option value="سادس ب">سادس ب</option>
+          <option value="سادس ج">سادس ج</option>
+          <option value="سادس د">سادس د</option>
+          <option value="سادس هـ">سادس هـ</option>
+          <option value="سادس و">سادس و</option>
+        </optgroup>
+
+      </select>
+      
+      <button id="login-btn" class="main-button">دخول</button>
+      
+    </div>
   </div>
 
   <script src="login-script.js"></script>
