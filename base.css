@@ -20,6 +20,7 @@ body {
   color: var(--text-color);
   direction: rtl;
   scroll-behavior: smooth;
+  transition: background var(--transition-speed), color var(--transition-speed);
 }
 
 /* الروابط والأزرار */
@@ -40,10 +41,11 @@ button {
   border-radius: 6px;
   font-size: 16px;
   cursor: pointer;
-  transition: background var(--transition-speed);
+  transition: background var(--transition-speed), transform 0.3s;
 }
 button:hover {
   background: #2a918e;
+  transform: translateY(-2px);
 }
 
 /* البطاقات العامة */
@@ -53,6 +55,29 @@ button:hover {
   box-shadow: 0 1px 6px rgba(0,0,0,0.1);
   padding: 15px;
   margin-bottom: 20px;
+  transform: translateY(10px);
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+.card.active {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* الجداول */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+table th, table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  transition: background 0.3s, transform 0.3s;
+}
+table tr:hover {
+  background-color: #f0f0f0;
+  transform: scale(1.02);
 }
 
 /* الوضع المظلم */
@@ -65,6 +90,9 @@ body.dark-mode .card {
 }
 body.dark-mode a {
   color: #80cbc4;
+}
+body.dark-mode table tr:hover {
+  background-color: #3a3a3a;
 }
 
 /* الترويسات */
@@ -81,6 +109,10 @@ h1, h2, h3 {
   margin: 10px 0;
   text-align: center;
   color: #0d47a1;
+  min-width: 220px;
+  font-size: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transition: all 0.4s ease;
 }
 
 /* هوامش عامة */
@@ -88,4 +120,28 @@ h1, h2, h3 {
   max-width: 1200px;
   margin: auto;
   padding: 15px;
+}
+
+/* الأخبار والنشاطات */
+.news-item, .activities-table tr {
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.news-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+  table th, table td {
+    padding: 8px;
+    font-size: 14px;
+  }
+  button {
+    font-size: 14px;
+    padding: 8px 14px;
+  }
 }
